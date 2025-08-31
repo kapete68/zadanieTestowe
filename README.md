@@ -18,6 +18,6 @@ create database ogloszenia;
 
 ```
 
-## 2.Postman
+### 2.Postman
 
 Z pewnością Państwo wiedzą ale powiem tylko, że najpierw trzeba zrobić posta, aby utworzyć ogłoszenie. Następnie skopiować id posta i wklejać je do url.

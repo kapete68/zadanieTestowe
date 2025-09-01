@@ -5,11 +5,13 @@ import com.todo.zadanie_testowe.exception.NotFoundException;
 import com.todo.zadanie_testowe.model.Ogloszenie;
 import com.todo.zadanie_testowe.repository.OgloszenieRepository;
 import com.todo.zadanie_testowe.strategy.ZmienIloscWyswietlen;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
+@Transactional
 public class OgloszenieService {
     private final OgloszenieRepository ogloszenieRepository;
     private final Map<String, ZmienIloscWyswietlen> strategie;

@@ -5,24 +5,26 @@ import com.todo.zadanie_testowe.exception.NotFoundException;
 import com.todo.zadanie_testowe.model.Ogloszenie;
 import com.todo.zadanie_testowe.repository.OgloszenieRepository;
 import com.todo.zadanie_testowe.strategy.ZmienIloscWyswietlen;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class OgloszenieService {
     private final OgloszenieRepository ogloszenieRepository;
-    private final ZmienIloscWyswietlen zmienIloscWyswietlen;
+    private final Map<String, ZmienIloscWyswietlen> strategie;
 
-    public OgloszenieService(OgloszenieRepository ogloszenieRepository, @Qualifier("zwiekszJeden") ZmienIloscWyswietlen zmienIloscWyswietlen) {
+    public OgloszenieService(OgloszenieRepository ogloszenieRepository,
+                             Map<String, ZmienIloscWyswietlen> strategie) {
         this.ogloszenieRepository = ogloszenieRepository;
-        this.zmienIloscWyswietlen = zmienIloscWyswietlen;
+        this.strategie = strategie;
     }
 
 
     public Ogloszenie znajdzOrazZwiekszIloscWyswietlenPoId(Long id) {
         Ogloszenie ogloszenie = ogloszenieRepository.findById(id).orElseThrow(() -> new NotFoundException("Nie znaleziono ogloszenia"));
 
-        zmienIloscWyswietlen.zwieksz(ogloszenie);
+        strategie.get("zwiekszJeden").zwieksz(ogloszenie);
         ogloszenieRepository.save(ogloszenie);
 
         return ogloszenie;

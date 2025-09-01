@@ -4,24 +4,25 @@ import com.todo.zadanie_testowe.dto.ApiResponse;
 import com.todo.zadanie_testowe.exception.NotFoundException;
 import com.todo.zadanie_testowe.model.Ogloszenie;
 import com.todo.zadanie_testowe.repository.OgloszenieRepository;
+import com.todo.zadanie_testowe.strategy.ZmienIloscWyswietlen;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OgloszenieService {
     private final OgloszenieRepository ogloszenieRepository;
+    private final ZmienIloscWyswietlen zmienIloscWyswietlen;
 
-    public OgloszenieService(OgloszenieRepository ogloszenieRepository) {
+    public OgloszenieService(OgloszenieRepository ogloszenieRepository, @Qualifier("zwiekszJeden") ZmienIloscWyswietlen zmienIloscWyswietlen) {
         this.ogloszenieRepository = ogloszenieRepository;
+        this.zmienIloscWyswietlen = zmienIloscWyswietlen;
     }
+
 
     public Ogloszenie znajdzOrazZwiekszIloscWyswietlenPoId(Long id) {
         Ogloszenie ogloszenie = ogloszenieRepository.findById(id).orElseThrow(() -> new NotFoundException("Nie znaleziono ogloszenia"));
 
-        // Według mnie to jest w porządku pod względem SOLID, ponieważ logika biznesowa jasno mówi,
-        // że podczas pobierania ogłoszenia zwiększamy również licznik wyświetleń.
-        // Stworzenie osobnej funkcji wyłącznie do wywołania zwiekszIloscWyswietlen() w tym kontekście
-        // wydawałoby się sztuczne i nie wnosiłoby realnej wartości.
-        ogloszenie.zwiekszIloscWyswietlen();
+        zmienIloscWyswietlen.zwieksz(ogloszenie);
         ogloszenieRepository.save(ogloszenie);
 
         return ogloszenie;

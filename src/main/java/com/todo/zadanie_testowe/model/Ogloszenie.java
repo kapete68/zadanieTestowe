@@ -27,10 +27,6 @@ public class Ogloszenie {
         dataDodania = LocalDateTime.now();
     }
 
-    public void zwiekszIloscWyswietlen() {
-        this.iloscWyswietlen++;
-    }
-
     public Ogloszenie() {
         // wymagany przez JPA
     }

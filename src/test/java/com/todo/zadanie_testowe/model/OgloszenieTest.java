@@ -21,20 +21,6 @@ class OgloszenieTest {
     }
 
     @Test
-    void inkrementacjaIlosciWyswietlen() {
-        Ogloszenie ogloszenie = new Ogloszenie("Testowe ogloszenie");
-        ogloszenie.onCreate();
-
-        assertEquals(0L, ogloszenie.getIloscWyswietlen(), "Ilosc wyswietlen powinna byc 0!");
-        assertNotNull(ogloszenie.getDataDodania(), "Data dodania jest pusta!");
-
-        Long poprzedniaIloscWyswietlen = ogloszenie.getIloscWyswietlen();
-        ogloszenie.zwiekszIloscWyswietlen();
-
-        assertEquals(poprzedniaIloscWyswietlen + 1, ogloszenie.getIloscWyswietlen(), "Ilosc wyswietlen powinna sie zmienic po inkrementacji o 1");
-    }
-
-    @Test
     void stworzenieKlasyBezWywolaniaOnCreate() {
         Ogloszenie ogloszenie = new Ogloszenie("Testowe ogloszenie");
 

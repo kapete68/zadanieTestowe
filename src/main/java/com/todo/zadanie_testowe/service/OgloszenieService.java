@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-@Transactional
 public class OgloszenieService {
     private final OgloszenieRepository ogloszenieRepository;
     private final Map<String, ZmienIloscWyswietlen> strategie;
@@ -22,7 +21,7 @@ public class OgloszenieService {
         this.strategie = strategie;
     }
 
-
+    @Transactional
     public Ogloszenie znajdzOrazZwiekszIloscWyswietlenPoId(Long id) {
         Ogloszenie ogloszenie = ogloszenieRepository.findById(id).orElseThrow(() -> new NotFoundException("Nie znaleziono ogloszenia"));
 
@@ -39,6 +38,7 @@ public class OgloszenieService {
         return new ApiResponse("Poprawnie utworzono ogloszenie", zapisaneOgloszenie.getId());
     }
 
+    @Transactional
     public ApiResponse zmianaTresciOgloszeniaPoId(Long id, String nowaTresc) {
         Ogloszenie ogloszenie = ogloszenieRepository.findById(id).orElseThrow(() -> new NotFoundException("Nie znaleziono ogloszenia"));
         ogloszenie.setTresc(nowaTresc);
@@ -47,7 +47,8 @@ public class OgloszenieService {
 
         return new ApiResponse("Poprawnie zaktualizowano ogloszenie", zapisaneOgloszenie.getId());
     }
-
+    
+    @Transactional
     public void usunOgloszeniePoId(Long id) {
         Ogloszenie ogloszenie = ogloszenieRepository.findById(id).orElseThrow(() -> new NotFoundException("Nie znaleziono ogloszenia"));
 
